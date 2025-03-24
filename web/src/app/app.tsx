@@ -1,5 +1,5 @@
-import { AppRouter } from "./router";
-import { AppProviders } from "./provider";
+import { AppRouter } from "@/app/router";
+import { AppProviders } from "@/app/provider";
 
 /**
  * アプリケーションのルートコンポーネント
