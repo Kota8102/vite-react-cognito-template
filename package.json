@@ -1,0 +1,13 @@
+{
+  "name": "vite-react-cognito-template",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "web",
+    "cdk"
+  ],
+  "scripts": {
+    "web": "npm run dev --workspace=web",
+    "cdk": "npm run cdk --workspace=cdk"
+  }
+}
