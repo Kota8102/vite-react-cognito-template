@@ -73,4 +73,30 @@ npm run cdk deploy
 ## 推奨IDE設定
 
 - [VS Code](https://code.visualstudio.com/)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome)
+
+## コードの品質管理
+
+このプロジェクトはコードの品質管理のために[Biome](https://biomejs.dev/)を使用しています。Biomeは高速で設定の簡単な、オールインワンのツールチェーンです。
+
+### 利用可能なコマンド
+
+webディレクトリとcdkディレクトリの両方で以下のコマンドが利用可能です：
+
+```bash
+# コードのフォーマット
+npm run format
+
+# リントチェック
+npm run lint
+
+# フォーマットとリントの両方をチェック
+npm run check
+```
+
+### Biomeの特徴
+
+- ⚡️ 高速な実行速度
+- 🔧 最小限の設定で開始可能
+- 📦 フォーマッター、リンター、整理ツールが統合
+- 🚀 TypeScriptとJavaScriptの完全サポート
