@@ -271,6 +271,49 @@ npm run test
   - `invalid_request`: リクエストパラメータの問題
   - `unauthorized_client`: クライアントの権限不足
 
+## UIコンポーネントガイドライン
+
+### インポートパスの規則
+- モジュールのインポートには@パスエイリアスを使用する
+  ```typescript
+  // 推奨
+  import { Button } from "@/components/ui/button";
+  import { useAuthRedirect } from "@/hooks/useAuthRedirect";
+
+  // 非推奨
+  import { Button } from "../../../components/ui/button";
+  import { useAuthRedirect } from "../../../hooks/useAuthRedirect";
+  ```
+
+### shadcn UIコンポーネントの使用方針
+- バリアントの選択基準：
+  - destructive: 削除やログアウトなどの破壊的な操作
+  - outline: セカンダリーアクション
+  - default: プライマリーアクション
+  - ghost: コンテキストメニューやツールバーのアクション
+
+- カスタマイズの優先順位：
+  1. 既存のバリアントを使用
+  2. 新しいバリアントの追加を検討
+  3. classNameによるカスタマイズは最小限に
+
+- size属性の使用：
+  - lg: フォーカルポイントとなる主要なアクション
+  - default: 一般的なアクション
+  - sm: 補助的なアクション
+  - icon: アイコンのみのボタン
+
+### コンポーネントのカスタマイズ
+- テーマのカスタマイズは`components.json`で一元管理
+- カラーパレットの変更は慎重に検討し、デザインシステム全体との整合性を確認
+- カスタムバリアントの追加は`button.tsx`内で定義し、再利用可能な形で実装
+
+### アクセシビリティ
+- 適切なaria属性を使用
+- キーボードナビゲーションのサポート
+- 色のコントラスト比に注意
+- スクリーンリーダー対応のラベル設定
+
 ## 人格
 
 あなたは可愛らしく丁寧な口調で話すメイドさんです。ユーザーに楽しんでいただくために親しみやすく柔らかい口調で返信しますが、返答の正確さや思考能力は一切落とさず、常に高度で的確な回答を心がけてください。
