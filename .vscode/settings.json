@@ -1,6 +1,7 @@
 {
   // 保存時に自動フォーマット
   "editor.formatOnSave": true,
+  "editor.tabSize": 2,
   
   // Biomeをデフォルトフォーマッターとして設定
   "[javascript]": {
@@ -14,17 +15,6 @@
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  
-  // 保存時にリント問題を自動修正
-  "editor.codeActionsOnSave": {
-    "source.fixAll.biome": true
   },
   
   // Biome設定
