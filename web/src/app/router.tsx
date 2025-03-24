@@ -6,6 +6,7 @@ import { LoadingSpinner } from "../components/loading";
 
 // 遅延ロードによるコード分割
 const HomePage = lazy(() => import("./routes/app/home").then(module => ({ default: module.HomePage })));
+const LoginPage = lazy(() => import("./routes/auth/login").then(module => ({ default: module.LoginPage })));
 
 /**
  * アプリケーションのルーターコンポーネント
@@ -15,6 +16,9 @@ export const AppRouter = () => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Routes>
+        {/* ログインページ */}
+        <Route path={paths.login.path} element={<LoginPage />} />
+
         {/* ホームページ - 認証が必要 */}
         <Route
           path={paths.home.path}

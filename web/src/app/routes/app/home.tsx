@@ -1,6 +1,6 @@
-import { useAuth } from "react-oidc-context";
-import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 import { Button } from "@/components/ui/button";
+import { signOut } from "@/lib/auth";
+import { useAuth } from "react-oidc-context";
 
 /**
  * ホーム画面コンポーネント
@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
  */
 export const HomePage = () => {
 	const auth = useAuth();
-	const { logoutClient, logoutCognito } = useAuthRedirect();
 
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-center">
@@ -46,16 +45,9 @@ export const HomePage = () => {
 				)}
 			</div>
 
-			<div className="flex gap-4">
-				<Button variant="destructive" onClick={logoutClient}>
-					ログアウト (クライアント側)
-				</Button>
-				<Button
-					variant="outline"
-					onClick={logoutCognito}
-					className="bg-orange-500 hover:bg-orange-600 text-white"
-				>
-					ログアウト (Cognito側)
+			<div className="flex justify-center">
+				<Button variant="destructive" onClick={signOut}>
+					ログアウト
 				</Button>
 			</div>
 		</div>
