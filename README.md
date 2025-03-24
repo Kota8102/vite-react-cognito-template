@@ -1,206 +1,231 @@
 # Vite + React + Cognito テンプレート
 
-このプロジェクトは、以下の技術スタックを使用したウェブアプリケーション開発のためのテンプレートです。
+このプロジェクトは、Vite、React、AWS Cognitoを使用したウェブアプリケーション開発のためのスターターテンプレートです。
 
 ## 技術スタック
 
 ### フロントエンド（web/）
 
-#### メインフレームワーク
+- **コアフレームワーク**
+  - [React](https://react.dev/) 19 - UIコンポーネントライブラリ
+  - [TypeScript](https://www.typescriptlang.org/) - 型安全な開発環境
+  - [Vite](https://vitejs.dev/) 6 - 高速な開発・ビルドツール
 
-- [React](https://react.dev/) 19 - ユーザーインターフェース構築のためのライブラリ
-- [TypeScript](https://www.typescriptlang.org/) - 静的型付けによる堅牢な開発
-- [Vite](https://vitejs.dev/) 6 - 高速な開発環境とビルドツール
+- **UI/UX**
+  - [shadcn/ui](https://ui.shadcn.com/) - カスタマイズ可能なUIコンポーネント
 
-#### 開発ツール
+- **開発ツール**
+  - [Biome](https://biomejs.dev/) - 高速なリンター・フォーマッター
+  - [Vitest](https://vitest.dev/) - ユニットテストフレームワーク
 
-- [Biome](https://biomejs.dev/) - リンターとフォーマッター
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react) - ReactのViteプラグイン
-- [shadcn/ui](https://ui.shadcn.com/) - 再利用可能なUIコンポーネント
+### バックエンド（cdk/）
 
-### インフラストラクチャ（cdk/）
+- **インフラストラクチャ**
+  - [AWS CDK](https://aws.amazon.com/jp/cdk/) v2 - AWSリソースのコード化
+  - [Amazon Cognito](https://aws.amazon.com/jp/cognito/) - ユーザー認証サービス
 
-#### フレームワーク
-
-- [AWS CDK](https://aws.amazon.com/jp/cdk/) v2 - AWSリソースのインフラストラクチャ管理
-- [TypeScript](https://www.typescriptlang.org/) - 型安全なインフラコード
-
-#### テスト
-
-- [Vitest](https://vitest.dev/) - ユニットテストフレームワーク
-
-- [Biome](https://biomejs.dev/) - リンターとフォーマッター
-- [ts-node](https://typestrong.org/ts-node/) - TypeScriptの実行環境
+- **開発ツール**
+  - [TypeScript](https://www.typescriptlang.org/) - 型安全なインフラコード
+  - [ts-node](https://typestrong.org/ts-node/) - TypeScript実行環境
 
 ## プロジェクト構造
 
-```bash
-.
-├── web/                      # フロントエンドアプリケーション（Vite + React）
-│   ├── src/                 # ソースコード
-│   │   ├── app/            # アプリケーション層
-│   │   │   ├── routes/    # アプリケーションのルート定義
-│   │   │   │   ├── app/  # 認証済みルート
-│   │   │   │   └── auth/ # 認証関連ルート
-│   │   │   ├── app.tsx    # メインアプリケーションコンポーネント
-│   │   │   ├── provider.tsx # グローバルプロバイダー
-│   │   │   └── router.tsx  # ルーター設定
-│   │   ├── assets/        # 静的ファイル（画像、フォントなど）
-│   │   ├── components/    # 共有コンポーネント
-│   │   │   ├── layouts/  # レイアウトコンポーネント
-│   │   │   └── ui/      # UIコンポーネント（shadcn/ui）
-│   │   ├── config/       # グローバル設定、環境変数など
-│   │   ├── features/     # 機能ベースのモジュール
-│   │   │   └── [feature]/ # 各機能のフォルダ
-│   │   │       ├── api/      # API関連
-│   │   │       ├── assets/   # 機能固有の静的ファイル
-│   │   │       ├── components/ # 機能スコープのコンポーネント
-│   │   │       ├── hooks/    # 機能スコープのフック
-│   │   │       ├── stores/   # 機能の状態管理
-│   │   │       ├── types/    # 型定義
-│   │   │       └── utils/    # ユーティリティ関数
-│   │   ├── hooks/         # 共有フック
-│   │   ├── lib/          # アプリケーション用ライブラリ
-│   │   ├── stores/       # グローバル状態管理
-│   │   ├── testing/      # テストユーティリティとモック
-│   │   ├── types/        # 共有の型定義
-│   │   └── utils/        # 共有ユーティリティ関数
-│   ├── public/           # 静的ファイル
-│   ├── index.html        # HTMLテンプレート
-│   └── vite.config.ts    # Viteの設定
-└── cdk/                   # AWSインフラストラクチャコード
-    ├── bin/              # CDKアプリケーションのエントリーポイント
-    │   └── cdk.ts       # スタックの初期化と環境設定
-    ├── lib/              # インフラストラクチャコードのメイン
-    │   ├── cdk-stack.ts # メインスタック定義
-    │   └── construct/   # 再利用可能なConstruct
-    │       └── auth.ts  # 認証関連のConstruct
-    └── test/             # テストコード
-        ├── cdk.test.ts  # CDKテスト
-        └── snapshot.test.ts # スナップショットテスト
+プロジェクトは、フロントエンド（`web/`）とインフラストラクチャ（`cdk/`）の2つの主要ディレクトリに分かれています。
 
+### フロントエンド構造（web/）
+
+```bash
+web/
+├── src/                  # ソースコード
+│   ├── app/              # アプリケーション層
+│   │   ├── routes/       # ルート定義
+│   │   │   ├── app/      # 認証済みルート
+│   │   │   └── auth/     # 認証関連ルート
+│   │   ├── app.tsx       # メインアプリケーション
+│   │   ├── provider.tsx  # グローバルプロバイダー
+│   │   └── router.tsx    # ルーター設定
+│   ├── assets/           # 静的ファイル
+│   ├── components/       # 共有コンポーネント
+│   ├── config/           # 設定ファイル
+│   ├── features/         # 機能モジュール
+│   ├── hooks/            # 共有フック
+│   ├── lib/              # ライブラリ
+│   ├── stores/           # 状態管理
+│   ├── types/            # 型定義
+│   └── utils/            # ユーティリティ
+├── public/               # 静的ファイル
+├── index.html            # HTMLテンプレート
+└── vite.config.ts        # Vite設定
 ```
 
-### CDKディレクトリ構造の説明
+### インフラストラクチャ構造（cdk/）
 
-#### `bin/`
+```bash
+cdk/
+├── bin/                 # CDKエントリーポイント
+│   └── cdk.ts           # スタック初期化
+├── lib/                 # メインコード
+│   ├── cdk-stack.ts     # メインスタック
+│   └── construct/       # 再利用可能なConstruct
+│       └── auth.ts      # 認証Construct
+└── test/                # テスト
+    ├── cdk.test.ts      # CDKテスト
+    └── snapshot.test.ts # スナップショットテスト
+```
 
-- CDKアプリケーションのエントリーポイント
-- 環境変数の設定と読み込み
-- スタックの初期化と環境別の設定
+## 特徴
 
-#### `lib/`
+- ⚡️ **高速な開発体験** - Viteによる高速な開発サーバーとHMR
+- 🔒 **統合認証** - Amazon Cognitoによる安全な認証システム
+- 📦 **モジュラー構造** - 機能ベースのディレクトリ構造
+- 🚀 **インフラのコード化** - CDKによるクラウドリソースの管理
+- 🎨 **美しいUI** - shadcn/uiコンポーネントライブラリ
+- 🛠️ **型安全** - TypeScriptによる堅牢な開発体験
+- 🧪 **テスト環境** - Vitestによる単体テスト
 
-- `cdk-stack.ts`: メインスタック定義
-  - 全体のリソース構成を定義
-  - 各Constructの組み合わせを管理
-- `construct/`: 再利用可能なAWSリソース
-  - 機能ごとに分割された独立したConstruct
-  - 単一責任の原則に従った設計
-  - 他プロジェクトでの再利用を考慮
+## 始め方
 
-#### `test/`
+### 前提条件
 
-- インフラストラクチャコードのテスト
-- スナップショットテスト
-- リソース構成の検証
+- Node.js 18.x以上
+- npm 9.x以上
+- AWSアカウントとアクセス権限
+- AWS CLIのセットアップと認証設定
 
-## 開発の始め方
+### インストール
+
+1. リポジトリのクローン:
+
+```bash
+git clone <リポジトリURL>
+cd <プロジェクト名>
+```
+
+2. 依存関係のインストール:
+
+```bash
+npm ci
+```
 
 ### 環境変数の設定
 
-このプロジェクトでは、セキュリティ上の理由から認証情報などの機密情報を環境変数として管理しています。以下の手順で環境変数を設定してください：
-
-1. `web/.env.example`ファイルをコピーして`web/.env`ファイルを作成します：
+フロントエンド（web/）で環境変数を設定します:
 
 ```bash
 cd web
 cp .env.example .env
 ```
 
-2. `.env`ファイルを編集して、必要な環境変数を設定します：
-
-```
-# Cognito認証設定
-VITE_COGNITO_REGION=your-region
-VITE_COGNITO_USER_POOL_ID=your-user-pool-id
-VITE_COGNITO_CLIENT_ID=your-client-id
-VITE_COGNITO_REDIRECT_URI=http://localhost:5173
-VITE_COGNITO_DOMAIN=https://your-domain-prefix.auth.your-region.amazoncognito.com
-```
-
-各環境変数の説明：
-
-- `VITE_COGNITO_REGION`: AWS Cognitoのリージョン（例：us-east-1）
-- `VITE_COGNITO_USER_POOL_ID`: Cognito User PoolのID
-- `VITE_COGNITO_CLIENT_ID`: Cognito App ClientのID
-- `VITE_COGNITO_REDIRECT_URI`: 認証後のリダイレクトURI（デフォルトはViteのローカル開発サーバー）
-- `VITE_COGNITO_DOMAIN`: Cognitoのドメイン
-
-**注意**: `.env`ファイルには機密情報が含まれるため、Gitリポジトリにコミットしないでください。`.gitignore`ファイルに`.env`が含まれていることを確認してください。
-
-### フロントエンド開発
+`.env`ファイルを編集し、以下の変数を設定します:
 
 ```bash
-cd web
-npm install
-npm run dev
+# Cognito認証設定
+VITE_COGNITO_REGION=ap-northeast-1
+VITE_COGNITO_USER_POOL_ID=ap-northeast-1_xxxxxxxxx
+VITE_COGNITO_CLIENT_ID=1234567890abcdefghijklmnop
+VITE_COGNITO_REDIRECT_URI=http://localhost:5173
+VITE_COGNITO_DOMAIN=https://your-domain.auth.ap-northeast-1.amazoncognito.com
 ```
 
-### インフラストラクチャの開発
+### インフラのデプロイ
+
+AWS CDKを使用してバックエンドインフラをデプロイします:
 
 ```bash
 cd cdk
-npm install
+
+# AWSプロファイルの設定（必要に応じて）
+export AWS_PROFILE=your-profile
+
+# CDKの初期化（初回のみ）
+npx cdk bootstrap
+
+# スタックのデプロイ
 npm run cdk deploy
 ```
 
-## 主な機能
+デプロイ後、出力されるCognito情報を`.env`ファイルに設定します。
 
-- ⚡️ Viteによる高速な開発体験
-- 📦 機能ベースのモジュール構造
-- 🔒 Amazon Cognitoを使用した認証機能
-- 🚀 CDKを使用したインフラストラクチャのコード化
-- 📁 スケーラブルなプロジェクト構造
-- 🎨 shadcn/uiによる美しいUIコンポーネント
-- 🛠️ TypeScriptによる型安全な開発
-- 🧪 Vitestによるテスト環境
+### フロントエンドの実行
 
-## コードの品質管理
+```bash
+cd web
+npm run dev
+```
 
-このプロジェクトは、以下のツールを使用してコードの品質を管理しています：
+ブラウザで <http://localhost:5173> を開くとアプリケーションにアクセスできます。
 
-### Biome
+## 開発ワークフロー
 
-[Biome](https://biomejs.dev/)は高速で設定の簡単な、オールインワンのツールチェーンです。
+### コード品質の管理
 
-webディレクトリとcdkディレクトリの両方で以下のコマンドが利用可能です：
+[Biome](https://biomejs.dev/)を使用してコードの品質を保ちます:
 
 ```bash
 # フォーマットとリントのチェック
 npm run check
 
-# 問題の自動修正を試みる
+# 問題の自動修正
 npm run format
 ```
 
-### markdownlint
+### Markdownドキュメントの管理
 
-Markdownファイルの品質管理には[markdownlint](https://github.com/DavidAnson/markdownlint)を使用しています。
+[markdownlint](https://github.com/DavidAnson/markdownlint)を使用してドキュメントの品質を管理:
 
 ```bash
-# Markdownファイルのチェック
+# Markdownのチェック
 npm run markdown:check
 
-# 自動修正可能な問題を修正
+# 自動修正
 npm run markdown:fix
 ```
 
-## コーディングスタイル
+### テスト実行
 
-詳細なコーディング規約については[.clinerules](./.clinerules)を参照してください。
+```bash
+# フロントエンドのテスト
+cd web
+npm run test
 
-## 推奨IDE設定
+# インフラのテスト
+cd cdk
+npm run test
+```
+
+## 機能モジュールの追加
+
+新しい機能を追加する際は、`features/`ディレクトリに新しいモジュールを作成します:
+
+```bash
+src/features/your-feature/
+├── api/         # API関連
+├── components/  # UIコンポーネント
+├── hooks/       # カスタムフック
+├── stores/      # 状態管理
+├── types/       # 型定義
+└── utils/       # ユーティリティ
+```
+
+## 推奨開発環境
 
 - [VS Code](https://code.visualstudio.com/)
-- [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome)
+- 拡張機能:
+  - [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome)
+  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  - [AWS Toolkit](https://marketplace.visualstudio.com/items?itemName=amazonwebservices.aws-toolkit-vscode)
+
+## トラブルシューティング
+
+### よくある問題
+
+- **認証エラー**: `.env`ファイルのCognito設定を確認してください
+- **ビルドエラー**: 依存関係が最新かどうか確認してください
+- **CDKデプロイエラー**: AWSの認証情報と権限を確認してください
+
+詳細なトラブルシューティングについては、[Wiki](リンク)を参照してください。
+
+## ライセンス
+
+このプロジェクトは[MITライセンス](LICENSE)の下で公開されています。
