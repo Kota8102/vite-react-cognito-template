@@ -5,9 +5,9 @@ import { AppProviders } from "@/app/provider";
  * アプリケーションのルートコンポーネント
  */
 export const App = () => {
-  return (
-    <AppProviders>
-      <AppRouter />
-    </AppProviders>
-  );
-}
+	return (
+		<AppProviders>
+			<AppRouter />
+		</AppProviders>
+	);
+};
