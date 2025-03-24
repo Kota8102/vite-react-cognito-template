@@ -23,13 +23,16 @@ export const loginRedirect = (auth: ReturnType<typeof useAuth>) => {
  * Cognitoのログアウトエンドポイントにリダイレクトしてセッションを終了します
  * ログアウト後は/loginページに遷移します
  */
-export const signOut = () => {
-  const { clientId, cognitoDomain } = cognitoLogoutConfig;
-  // ログアウト後は/loginにリダイレクト
-  const logoutUri = `${window.location.origin}${paths.login.path}`;
-  window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(
-    logoutUri,
-  )}`;
+export const signOut = (auth: ReturnType<typeof useAuth>) => {
+	const { clientId } = cognitoLogoutConfig;
+	const logoutUri = `${window.location.origin}${paths.login.path}`;
+
+	auth.signoutRedirect({
+		extraQueryParams: {
+			client_id: clientId,
+			logout_uri: logoutUri,
+		},
+	});
 };
 
 /**
