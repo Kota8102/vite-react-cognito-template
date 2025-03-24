@@ -6,7 +6,7 @@ import { useAuthRedirect } from "../../../hooks/useAuthRedirect";
  * ホーム画面コンポーネント
  * 認証済みユーザー向けの画面を表示します
  */
-export function HomePage() {
+export const HomePage = () => {
   const auth = useAuth();
   const { logoutClient, logoutCognito } = useAuthRedirect();
 

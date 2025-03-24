@@ -4,7 +4,7 @@ import { AppProviders } from "./provider";
 /**
  * アプリケーションのルートコンポーネント
  */
-export function App() {
+export const App = () => {
   return (
     <AppProviders>
       <AppRouter />

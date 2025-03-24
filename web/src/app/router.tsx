@@ -11,7 +11,7 @@ const HomePage = lazy(() => import("./routes/app/home").then(module => ({ defaul
  * アプリケーションのルーターコンポーネント
  * React Routerを使用して、パスに基づいて適切なコンポーネントを表示します
  */
-export function AppRouter() {
+export const AppRouter = () => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Routes>

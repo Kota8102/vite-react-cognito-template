@@ -7,7 +7,7 @@ import { LoadingSpinner } from "../components/loading";
  * 認証が必要なコンポーネントをラップするためのコンポーネント
  * 認証されていない場合は、ログイン画面にリダイレクトします
  */
-export function RequireAuth({ children }: { children: ReactNode }) {
+export const RequireAuth = ({ children }: { children: ReactNode }) => {
   const auth = useAuth();
   const { isLoading, isAuthenticated, error } = auth;
 
