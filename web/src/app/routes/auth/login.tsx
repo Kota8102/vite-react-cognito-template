@@ -11,21 +11,21 @@ import { paths } from "../../../config/paths";
  * 認証済みの場合はホームページにリダイレクトします
  */
 export const LoginPage = () => {
-  const auth = useAuth();
-  const navigate = useNavigate();
-  const { isLoading, isAuthenticated } = auth;
+	const auth = useAuth();
+	const navigate = useNavigate();
+	const { isLoading, isAuthenticated } = auth;
 
-  useEffect(() => {
-    if (!isLoading) {
-      if (isAuthenticated) {
-        // 認証済みの場合はホームページへリダイレクト
-        navigate(paths.home.path);
-      } else {
-        // 未認証の場合はCognitoの認証画面へリダイレクト
-        loginRedirect(auth);
-      }
-    }
-  }, [isLoading, isAuthenticated, auth, navigate]);
+	useEffect(() => {
+		if (!isLoading) {
+			if (isAuthenticated) {
+				// 認証済みの場合はホームページへリダイレクト
+				navigate(paths.home.path);
+			} else {
+				// 未認証の場合はCognitoの認証画面へリダイレクト
+				loginRedirect(auth);
+			}
+		}
+	}, [isLoading, isAuthenticated, auth, navigate]);
 
-  return <LoadingSpinner />;
+	return <LoadingSpinner />;
 };
