@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import type { ReactNode } from "react";
 import { useAuth } from "react-oidc-context";
 import { useNavigate } from "react-router-dom";
-import { LoadingSpinner } from "../components/loading";
-import { cognitoLogoutConfig } from "../config/auth";
-import { paths } from "../config/paths";
+import { LoadingSpinner } from "@/components/loading";
+import { cognitoLogoutConfig } from "@/config/auth";
+import { paths } from "@/config/paths";
 
 /**
  * Cognitoへのログインリダイレクト処理
