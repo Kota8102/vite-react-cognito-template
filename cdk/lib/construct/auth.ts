@@ -1,6 +1,6 @@
-import { Construct } from "constructs";
-import * as cognito from "aws-cdk-lib/aws-cognito";
 import * as cdk from "aws-cdk-lib";
+import * as cognito from "aws-cdk-lib/aws-cognito";
+import { Construct } from "constructs";
 
 export interface AuthProps {
   readonly stackName: string;
