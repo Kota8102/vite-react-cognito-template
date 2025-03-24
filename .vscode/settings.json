@@ -1,0 +1,42 @@
+{
+  // 保存時に自動フォーマット
+  "editor.formatOnSave": true,
+  
+  // Biomeをデフォルトフォーマッターとして設定
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  
+  // 保存時にリント問題を自動修正
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": true
+  },
+  
+  // Biome設定
+  "biome.enabled": true,
+  "biome.lspBin": "node_modules/.bin/biome",
+  
+  // Markdownファイル用の設定
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "markdownlint.config": {
+    "default": true
+  }
+}
