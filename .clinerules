@@ -213,7 +213,7 @@ npm run test
 ### 機密ファイル
 以下のファイルは読み取りや変更を禁止します：
 - .env ファイル
-- **/config/secrets.* 
+- **/config/secrets.*
 - **/*.pem
 - APIキー、トークン、認証情報を含むすべてのファイル
 
@@ -221,6 +221,55 @@ npm run test
 - 機密ファイルは決してコミットしない
 - 秘密情報は環境変数を使用する
 - 認証情報はログや出力に含めない
+
+### 認証設定のセキュリティガイドライン
+
+#### 環境変数による認証情報の管理
+- Cognito User Pool ID、Client ID、ドメインなどの認証情報は環境変数として管理する
+- 認証情報は以下の形式で`.env`ファイルに定義する：
+  ```
+  VITE_COGNITO_REGION=リージョン名
+  VITE_COGNITO_USER_POOL_ID=User Pool ID
+  VITE_COGNITO_CLIENT_ID=Client ID
+  VITE_COGNITO_REDIRECT_URI=リダイレクトURI
+  VITE_COGNITO_DOMAIN=Cognitoドメイン
+  ```
+
+#### リダイレクトURIの設定
+- リダイレクトURIはAWSコンソールのCognito設定と完全に一致させる
+- リダイレクトURIの末尾のスラッシュの有無に注意する（`http://localhost:5173`と`http://localhost:5173/`は異なるURIとして扱われる）
+- コールバックパスが必要な場合は明示的に設定する（例：`http://localhost:5173/callback`）
+
+#### 認証設定の検証
+- 認証設定を変更した場合は、必ずログインフローをテストする
+- リダイレクトミスマッチエラーが発生した場合は、以下を確認する：
+  1. 環境変数のリダイレクトURIとAWSコンソールの設定が一致しているか
+  2. ドメイン名が正しく設定されているか
+  3. 末尾のスラッシュの有無が一致しているか
+
+#### OAuth設定の変更
+- OAuth設定（response_type、scopeなど）の変更は慎重に行う
+- 変更前にAWSコンソールのApp Client設定で対応するフローが有効になっているか確認する
+- 認可コードフロー（response_type: "code"）を使用する場合、App ClientでOAuth 2.0フローが有効になっている必要がある
+
+#### 環境変数の型定義
+- 認証関連の環境変数の型定義を`vite-env.d.ts`に追加する：
+  ```typescript
+  interface ImportMetaEnv {
+    readonly VITE_COGNITO_REGION: string;
+    readonly VITE_COGNITO_USER_POOL_ID: string;
+    readonly VITE_COGNITO_CLIENT_ID: string;
+    readonly VITE_COGNITO_REDIRECT_URI: string;
+    readonly VITE_COGNITO_DOMAIN: string;
+  }
+  ```
+
+#### 認証エラーのデバッグ
+- 認証エラーが発生した場合は、ブラウザのコンソールとURLパラメータを確認する
+- エラーメッセージを基に適切な対応を行う：
+  - `redirect_mismatch`: リダイレクトURIの不一致
+  - `invalid_request`: リクエストパラメータの問題
+  - `unauthorized_client`: クライアントの権限不足
 
 ## 人格
 
