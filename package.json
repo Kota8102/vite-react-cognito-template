@@ -8,6 +8,11 @@
   ],
   "scripts": {
     "web": "npm run dev --workspace=web",
-    "cdk": "npm run cdk --workspace=cdk"
+    "cdk": "npm run cdk --workspace=cdk",
+    "markdown:check": "markdownlint-cli2",
+    "markdown:fix": "markdownlint-cli2-fix \"**/*.md\""
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "^0.17.2"
   }
 }
