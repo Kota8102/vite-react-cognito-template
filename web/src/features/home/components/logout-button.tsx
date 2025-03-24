@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { LogOut } from "lucide-react";
-import { useAuth } from "react-oidc-context";
 import { Button } from "@/components/ui/button";
-import { signOut } from "@/lib/auth";
+import { useCognitoAuth } from "@/lib/auth";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export const LogoutButton = () => {
-	const auth = useAuth();
+	const { logout } = useCognitoAuth();
 	const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -23,7 +22,7 @@ export const LogoutButton = () => {
 		try {
 			setIsLoggingOut(true);
 			await new Promise((resolve) => setTimeout(resolve, 500)); // ログアウト処理の視覚的フィードバック用
-			signOut(auth);
+			logout();
 		} catch (error) {
 			console.error("ログアウト中にエラーが発生しました:", error);
 		} finally {
