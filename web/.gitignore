@@ -7,6 +7,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# 環境変数ファイル（機密情報を含むため）
+.env
+.env.production
+.env.development
+.env.local
+
 node_modules
 dist
 dist-ssr

@@ -77,6 +77,37 @@
 
 ## 開発の始め方
 
+### 環境変数の設定
+
+このプロジェクトでは、セキュリティ上の理由から認証情報などの機密情報を環境変数として管理しています。以下の手順で環境変数を設定してください：
+
+1. `web/.env.example`ファイルをコピーして`web/.env`ファイルを作成します：
+
+```bash
+cd web
+cp .env.example .env
+```
+
+2. `.env`ファイルを編集して、必要な環境変数を設定します：
+
+```
+# Cognito認証設定
+VITE_COGNITO_REGION=your-region
+VITE_COGNITO_USER_POOL_ID=your-user-pool-id
+VITE_COGNITO_CLIENT_ID=your-client-id
+VITE_COGNITO_REDIRECT_URI=http://localhost:5173
+VITE_COGNITO_DOMAIN=https://your-domain-prefix.auth.your-region.amazoncognito.com
+```
+
+各環境変数の説明：
+- `VITE_COGNITO_REGION`: AWS Cognitoのリージョン（例：us-east-1）
+- `VITE_COGNITO_USER_POOL_ID`: Cognito User PoolのID
+- `VITE_COGNITO_CLIENT_ID`: Cognito App ClientのID
+- `VITE_COGNITO_REDIRECT_URI`: 認証後のリダイレクトURI（デフォルトはViteのローカル開発サーバー）
+- `VITE_COGNITO_DOMAIN`: Cognitoのドメイン
+
+**注意**: `.env`ファイルには機密情報が含まれるため、Gitリポジトリにコミットしないでください。`.gitignore`ファイルに`.env`が含まれていることを確認してください。
+
 ### フロントエンド開発
 
 ```bash
