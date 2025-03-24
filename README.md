@@ -1,10 +1,36 @@
 # Vite + React + Cognito テンプレート
 
-このプロジェクトは、以下の技術スタックを使用したウェブアプリケーション開発のためのテンプレートです：
+このプロジェクトは、以下の技術スタックを使用したウェブアプリケーション開発のためのテンプレートです。
 
-- [Vite](https://vitejs.dev/) - 高速な開発環境とビルドツール
-- [React](https://react.dev/) - ユーザーインターフェース構築のためのライブラリ
-- [AWS CDK](https://aws.amazon.com/jp/cdk/) - AWSリソースのインフラストラクチャ管理
+## 技術スタック
+
+### フロントエンド（web/）
+
+#### メインフレームワーク
+
+- [React](https://react.dev/) 19 - ユーザーインターフェース構築のためのライブラリ
+- [TypeScript](https://www.typescriptlang.org/) - 静的型付けによる堅牢な開発
+- [Vite](https://vitejs.dev/) 6 - 高速な開発環境とビルドツール
+
+#### 開発ツール
+
+- [Biome](https://biomejs.dev/) - リンターとフォーマッター
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react) - ReactのViteプラグイン
+- [shadcn/ui](https://ui.shadcn.com/) - 再利用可能なUIコンポーネント
+
+### インフラストラクチャ（cdk/）
+
+#### フレームワーク
+
+- [AWS CDK](https://aws.amazon.com/jp/cdk/) v2 - AWSリソースのインフラストラクチャ管理
+- [TypeScript](https://www.typescriptlang.org/) - 型安全なインフラコード
+
+#### テスト
+
+- [Vitest](https://vitest.dev/) - ユニットテストフレームワーク
+
+- [Biome](https://biomejs.dev/) - リンターとフォーマッター
+- [ts-node](https://typestrong.org/ts-node/) - TypeScriptの実行環境
 
 ## プロジェクト構造
 
@@ -14,11 +40,15 @@
 │   ├── src/                 # ソースコード
 │   │   ├── app/            # アプリケーション層
 │   │   │   ├── routes/    # アプリケーションのルート定義
+│   │   │   │   ├── app/  # 認証済みルート
+│   │   │   │   └── auth/ # 認証関連ルート
 │   │   │   ├── app.tsx    # メインアプリケーションコンポーネント
 │   │   │   ├── provider.tsx # グローバルプロバイダー
 │   │   │   └── router.tsx  # ルーター設定
 │   │   ├── assets/        # 静的ファイル（画像、フォントなど）
 │   │   ├── components/    # 共有コンポーネント
+│   │   │   ├── layouts/  # レイアウトコンポーネント
+│   │   │   └── ui/      # UIコンポーネント（shadcn/ui）
 │   │   ├── config/       # グローバル設定、環境変数など
 │   │   ├── features/     # 機能ベースのモジュール
 │   │   │   └── [feature]/ # 各機能のフォルダ
@@ -37,18 +67,18 @@
 │   │   └── utils/        # 共有ユーティリティ関数
 │   ├── public/           # 静的ファイル
 │   ├── index.html        # HTMLテンプレート
-│   └── vite.config.js    # Viteの設定
+│   └── vite.config.ts    # Viteの設定
 └── cdk/                   # AWSインフラストラクチャコード
     ├── bin/              # CDKアプリケーションのエントリーポイント
     │   └── cdk.ts       # スタックの初期化と環境設定
     ├── lib/              # インフラストラクチャコードのメイン
     │   ├── cdk-stack.ts # メインスタック定義
     │   └── construct/   # 再利用可能なConstruct
-    │       ├── auth.ts  # 認証関連のConstruct
-    │       ├── storage.ts # ストレージ関連のConstruct
-    │       └── api.ts   # API関連のConstruct
+    │       └── auth.ts  # 認証関連のConstruct
     └── test/             # テストコード
-        └── *.test.ts    # 各種テストファイル
+        ├── cdk.test.ts  # CDKテスト
+        └── snapshot.test.ts # スナップショットテスト
+
 ```
 
 ### CDKディレクトリ構造の説明
@@ -100,6 +130,7 @@ VITE_COGNITO_DOMAIN=https://your-domain-prefix.auth.your-region.amazoncognito.co
 ```
 
 各環境変数の説明：
+
 - `VITE_COGNITO_REGION`: AWS Cognitoのリージョン（例：us-east-1）
 - `VITE_COGNITO_USER_POOL_ID`: Cognito User PoolのID
 - `VITE_COGNITO_CLIENT_ID`: Cognito App ClientのID
@@ -131,34 +162,45 @@ npm run cdk deploy
 - 🔒 Amazon Cognitoを使用した認証機能
 - 🚀 CDKを使用したインフラストラクチャのコード化
 - 📁 スケーラブルなプロジェクト構造
+- 🎨 shadcn/uiによる美しいUIコンポーネント
+- 🛠️ TypeScriptによる型安全な開発
+- 🧪 Vitestによるテスト環境
+
+## コードの品質管理
+
+このプロジェクトは、以下のツールを使用してコードの品質を管理しています：
+
+### Biome
+
+[Biome](https://biomejs.dev/)は高速で設定の簡単な、オールインワンのツールチェーンです。
+
+webディレクトリとcdkディレクトリの両方で以下のコマンドが利用可能です：
+
+```bash
+# フォーマットとリントのチェック
+npm run check
+
+# 問題の自動修正を試みる
+npm run format
+```
+
+### markdownlint
+
+Markdownファイルの品質管理には[markdownlint](https://github.com/DavidAnson/markdownlint)を使用しています。
+
+```bash
+# Markdownファイルのチェック
+npm run markdown:check
+
+# 自動修正可能な問題を修正
+npm run markdown:fix
+```
+
+## コーディングスタイル
+
+詳細なコーディング規約については[.clinerules](./.clinerules)を参照してください。
 
 ## 推奨IDE設定
 
 - [VS Code](https://code.visualstudio.com/)
 - [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome)
-
-## コードの品質管理
-
-このプロジェクトはコードの品質管理のために[Biome](https://biomejs.dev/)を使用しています。Biomeは高速で設定の簡単な、オールインワンのツールチェーンです。
-
-### 利用可能なコマンド
-
-webディレクトリとcdkディレクトリの両方で以下のコマンドが利用可能です：
-
-```bash
-# コードのフォーマット
-npm run format
-
-# リントチェック
-npm run lint
-
-# フォーマットとリントの両方をチェック
-npm run check
-```
-
-### Biomeの特徴
-
-- ⚡️ 高速な実行速度
-- 🔧 最小限の設定で開始可能
-- 📦 フォーマッター、リンター、整理ツールが統合
-- 🚀 TypeScriptとJavaScriptの完全サポート
