@@ -13,6 +13,7 @@
     "markdown:fix": "markdownlint-cli2-fix \"**/*.md\""
   },
   "devDependencies": {
-    "markdownlint-cli2": "^0.17.2"
+    "markdownlint-cli2": "^0.17.2",
+    "aws-sdk": "^2.1569.0"
   }
 }
