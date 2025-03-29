@@ -8,13 +8,18 @@ export class CdkStack extends cdk.Stack {
     super(scope, id, props);
 
     // Cognitoの設定
-    new Auth(this, "Auth", {
+    const auth = new Auth(this, "Auth", {
       stackName: id,
     });
 
     // CloudFront + S3ホスティングの設定
     new Hosting(this, "Hosting", {
       stackName: id,
+      cognito: {
+        userPool: auth.userPool,
+        userPoolClient: auth.client,
+        domain: `https://${auth.userPool.userPoolProviderName}.auth.${this.region}.amazoncognito.com`,
+      },
     });
   }
 }
