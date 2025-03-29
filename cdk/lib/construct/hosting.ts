@@ -1,9 +1,11 @@
 import * as cdk from "aws-cdk-lib";
+import { Stack } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import type * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import { CloudFrontToS3 } from "@aws-solutions-constructs/aws-cloudfront-s3";
 import { NodejsBuild } from "deploy-time-build";
+import type * as cognito from "aws-cdk-lib/aws-cognito";
 
 export interface HostingProps {
   /**
@@ -11,6 +13,17 @@ export interface HostingProps {
    * @description バケット名などのリソース名の生成に使用します
    */
   stackName: string;
+  /**
+   * Cognito関連のリソース
+   */
+  cognito: {
+    /** ユーザープール */
+    userPool: cognito.UserPool;
+    /** ユーザープールクライアント */
+    userPoolClient: cognito.UserPoolClient;
+    /** Cognitoドメイン */
+    domain: string;
+  };
 }
 
 /**
@@ -64,7 +77,11 @@ export class Hosting extends Construct {
       outputSourceDirectory: "dist",
       buildCommands: ["npm install", "npm run build"],
       buildEnvironment: {
-        VITE_APP_STAGE: "production",
+        VITE_COGNITO_REGION: Stack.of(this).region,
+        VITE_COGNITO_USER_POOL_ID: props.cognito.userPool.userPoolId,
+        VITE_COGNITO_CLIENT_ID: props.cognito.userPoolClient.userPoolClientId,
+        VITE_COGNITO_DOMAIN: props.cognito.domain,
+        VITE_COGNITO_REDIRECT_URI: `https://${cloudFrontWebDistribution.distributionDomainName}`,
       },
     });
 
