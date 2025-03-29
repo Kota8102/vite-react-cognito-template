@@ -1005,7 +1005,48 @@ exports[`CDK Snapshot Tests > Matches infrastructure snapshot 1`] = `
         "workingDirectory": "web",
         "outputSourceDirectory": "web/dist",
         "environment": {
-          "VITE_APP_STAGE": "production"
+          "VITE_COGNITO_REGION": {
+            "Ref": "AWS::Region"
+          },
+          "VITE_COGNITO_USER_POOL_ID": {
+            "Ref": "AuthUserPool8115E87F"
+          },
+          "VITE_COGNITO_CLIENT_ID": {
+            "Ref": "AuthUserPoolClient0AA456E4"
+          },
+          "VITE_COGNITO_DOMAIN": {
+            "Fn::Join": [
+              "",
+              [
+                "https://",
+                {
+                  "Fn::GetAtt": [
+                    "AuthUserPool8115E87F",
+                    "ProviderName"
+                  ]
+                },
+                ".auth.",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ".amazoncognito.com"
+              ]
+            ]
+          },
+          "VITE_COGNITO_REDIRECT_URI": {
+            "Fn::Join": [
+              "",
+              [
+                "https://",
+                {
+                  "Fn::GetAtt": [
+                    "HostingWebHostingCloudFrontDistribution60F54D28",
+                    "DomainName"
+                  ]
+                }
+              ]
+            ]
+          }
         },
         "buildCommands": [
           "npm install",
@@ -1026,7 +1067,7 @@ exports[`CDK Snapshot Tests > Matches infrastructure snapshot 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}"
           },
-          "S3Key": "12157b27d30ab71eb24ae65825f672ba5cc2c09dbb1703cd7adfcff3aeaca136.zip"
+          "S3Key": "11c5049f0fcd53c098101a7401ac0c9ac8d4cebab31bfe36cda71857b189a86f.zip"
         },
         "Description": "/opt/awscli/aws"
       },
